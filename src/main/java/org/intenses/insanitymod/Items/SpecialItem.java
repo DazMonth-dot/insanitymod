@@ -27,8 +27,8 @@ public class SpecialItem extends Item {
         return stack.getOrCreateTag().getInt("mode");
     }
 
-//    @Override
-//    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-//        SpecialItemRenderer.register(consumer);
-//    }
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+       SpecialItemRenderer.register(consumer);
+    }
 }

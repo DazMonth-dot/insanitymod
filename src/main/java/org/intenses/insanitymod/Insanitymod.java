@@ -63,23 +63,25 @@ public class Insanitymod {
             "key.insanitymod.switch_mode", GLFW.GLFW_KEY_H, "category.insanitymod");
 
     // Сетевой канал
-    private static final String PROTOCOL_VERSION = "1";
+    //private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel NETWORK = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(MOD_ID, "main"),
-            () -> PROTOCOL_VERSION,
-            PROTOCOL_VERSION::equals,
-            PROTOCOL_VERSION::equals
+            new ResourceLocation("insanitymod", "main"),
+            () -> "1.0",
+            "1.0"::equals,
+            "1.0"::equals
     );
+
+    public static void registerPackets() {
+        int id = 0;
+        NETWORK.registerMessage(id++, ItemModePacket.class, ItemModePacket::encode, ItemModePacket::decode, ItemModePacket::handle);
+    }
 
     public Insanitymod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addListener(this::commonSetup);
         ITEMS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
-
-        // Регистрация сетевых пакетов
-        int id = 0;
-        NETWORK.registerMessage(id++, ItemModePacket.class, ItemModePacket::encode, ItemModePacket::decode, ItemModePacket::handle);
+        registerPackets();
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -118,14 +120,14 @@ public class Insanitymod {
         // Здесь можно добавить дополнительную логику, если нужно
     }
 
-    @SubscribeEvent
-    public void onWorldLoad(LevelEvent.Load event) {
-        if (event.getLevel() instanceof ServerLevel serverLevel) {
-            File worldFolder = serverLevel.getServer().getWorldPath(LevelResource.ROOT).toFile();
-            File serverConfigFolder = new File(worldFolder, "serverconfig");
-            deleteFilesInFolder(serverConfigFolder);
-        }
-    }
+//    @SubscribeEvent
+//    public void onWorldLoad(LevelEvent.Load event) {
+//        if (event.getLevel() instanceof ServerLevel serverLevel) {
+//            File worldFolder = serverLevel.getServer().getWorldPath(LevelResource.ROOT).toFile();
+//            File serverConfigFolder = new File(worldFolder, "serverconfig");
+//            deleteFilesInFolder(serverConfigFolder);
+//        }
+//    }
 
     private static void deleteFilesInFolder(File folder) {
         if (folder.exists() && folder.isDirectory()) {
