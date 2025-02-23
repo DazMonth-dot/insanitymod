@@ -1,5 +1,6 @@
 package org.intenses.insanitymod;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
@@ -26,15 +27,17 @@ public class SoulLampCheck {
     }
 
     public static void ApplyEffect(TickEvent.PlayerTickEvent event) {
-        Player player = event.player;
-        if (check(event)) {
-            MobEffect veiledEffect = Registry.MOB_EFFECT.get(VEILED_EFFECT_ID);
-            if (veiledEffect != null) {
-                MobEffectInstance effectInstance = new MobEffectInstance(veiledEffect, Integer.MAX_VALUE, 0, false, false);
-                player.addEffect(effectInstance);
+        if (Minecraft.getInstance().level != null) {
+            Player player = event.player;
+            if (check(event)) {
+                MobEffect veiledEffect = Registry.MOB_EFFECT.get(VEILED_EFFECT_ID);
+                if (veiledEffect != null) {
+                    MobEffectInstance effectInstance = new MobEffectInstance(veiledEffect, Integer.MAX_VALUE, 0, false, false);
+                    player.addEffect(effectInstance);
+                }
+            } else {
+                player.removeEffect(Registry.MOB_EFFECT.get(VEILED_EFFECT_ID));
             }
-        } else {
-            player.removeEffect(Registry.MOB_EFFECT.get(VEILED_EFFECT_ID));
         }
     }
 }
