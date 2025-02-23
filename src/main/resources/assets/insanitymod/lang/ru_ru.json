@@ -1,5 +1,6 @@
 {
   "key.insanitymod.activate": "Активировать Амулет",
   "key.insanitymod.switch_mode": "Поменять режим Амулета",
-  "category.insanitymod": "Insanity Mod"
+  "category.insanitymod": "Insanity Mod",
+  "item.insanitymod.special_item": "Амулет"
 }

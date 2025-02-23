@@ -62,6 +62,7 @@ public class Insanitymod {
     public static final KeyMapping SWITCH_MODE_KEY = new KeyMapping(
             "key.insanitymod.switch_mode", GLFW.GLFW_KEY_H, "category.insanitymod");
 
+
     // Сетевой канал
     //private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel NETWORK = NetworkRegistry.newSimpleChannel(
@@ -91,10 +92,16 @@ public class Insanitymod {
         });
     }
 
+    private static boolean keyMappingsRegistered = false;
+
     @SubscribeEvent
     public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
-        event.register(ACTIVATE_KEY);
-        event.register(SWITCH_MODE_KEY);
+        if (!keyMappingsRegistered) {
+            event.register(ACTIVATE_KEY);
+            event.register(SWITCH_MODE_KEY);
+            Insanitymod.LOGGER.info("Registering key mappings for InsanityMod (once)");
+            keyMappingsRegistered = true;
+        }
     }
 
     @SubscribeEvent

@@ -77,6 +77,7 @@ public class ItemModePacket {
                         // Обновляем состояние и режим предмета
                         specialItem.setActive(stack, packet.isActive);
                         specialItem.setMode(stack, packet.mode);
+                        Insanitymod.LOGGER.info("Handling ItemModePacket: slot={}, isActive={}, mode={}", packet.slot, packet.isActive, packet.mode);
                     } else {
                         Insanitymod.LOGGER.warn("Предмет в слоте {} не является SpecialItem", packet.slot);
                     }

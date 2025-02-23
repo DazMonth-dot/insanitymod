@@ -3,7 +3,7 @@ package org.intenses.insanitymod.Items;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -12,15 +12,12 @@ import org.intenses.insanitymod.network.ItemModePacket;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
-import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
-import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
 import java.util.Optional;
 
 import static org.intenses.insanitymod.Insanitymod.*;
 
-@Mod.EventBusSubscriber(modid = Insanitymod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = Insanitymod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class KeyHandler {
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
@@ -43,16 +40,18 @@ public class KeyHandler {
                     LOGGER.debug("Curios API not found, skipping Curious slot check.");
                 }
 
-                if (ACTIVATE_KEY.isDown()) {
+                if (ACTIVATE_KEY.consumeClick()) {
                     if (mainHand.getItem() instanceof SpecialItem) {
                         boolean newActive = !SpecialItem.isActive(mainHand);
                         SpecialItem.setActive(mainHand, newActive);
-                        int slot = player.getInventory().selected + 36; // Главная рука
+                        int slot = player.getInventory().selected; // 0–8 для горячей панели
+                        Insanitymod.LOGGER.info("Sending ItemModePacket for slot: {}, isActive: {}, mode: {}", slot, newActive, SpecialItem.getMode(mainHand));
                         Insanitymod.NETWORK.sendToServer(new ItemModePacket(slot, newActive, SpecialItem.getMode(mainHand)));
                     } else if (offHand.getItem() instanceof SpecialItem) {
                         boolean newActive = !SpecialItem.isActive(offHand);
                         SpecialItem.setActive(offHand, newActive);
-                        int slot = 45; // Вторая рука
+                        int slot = 40; // Вторая рука
+                        Insanitymod.LOGGER.info("Sending ItemModePacket for slot: {}, isActive: {}, mode: {}", slot, newActive, SpecialItem.getMode(offHand));
                         Insanitymod.NETWORK.sendToServer(new ItemModePacket(slot, newActive, SpecialItem.getMode(offHand)));
                     } else if (inCuriosSlot) {
                         Optional<SlotResult> slotResultOpt = CuriosApi.getCuriosHelper()
@@ -63,35 +62,26 @@ public class KeyHandler {
                             boolean newActive = !SpecialItem.isActive(stack);
                             SpecialItem.setActive(stack, newActive);
 
-                            // Получаем инвентарь Curios через getCuriosHandler
-                            LazyOptional<ICuriosItemHandler> curiosHandlerOpt = CuriosApi.getCuriosHelper().getCuriosHandler(player);
-                            curiosHandlerOpt.ifPresent(curiosHandler -> {
-                                SlotContext slotContext = slotResult.slotContext();
-                                Optional<ICurioStacksHandler> stacksHandlerOpt = curiosHandler.getStacksHandler(slotContext.getIdentifier());
-                                stacksHandlerOpt.ifPresent(stacksHandler -> {
-                                    IDynamicStackHandler stackHandler = stacksHandler.getStacks(); // Получаем IDynamicStackHandler
-                                    if (stackHandler != null) {
-                                        int slotIndex = slotContext.getIndex(); // Индекс слота из SlotContext
-                                        stackHandler.setStackInSlot(slotIndex, stack); // Обновляем стек в слоте
-                                    }
-                                });
-                            });
+                            SlotContext slotContext = slotResult.slotContext();
+                            CuriosApi.getCuriosHelper().setEquippedCurio(player, slotContext.getIdentifier(), slotContext.getIndex(), stack);
                         }
                     }
                 }
 
-                if (SWITCH_MODE_KEY.isDown()) {
+                if (SWITCH_MODE_KEY.consumeClick()) {
                     if (mainHand.getItem() instanceof SpecialItem) {
                         int currentMode = SpecialItem.getMode(mainHand);
                         int newMode = (currentMode + 1) % 3;
                         SpecialItem.setMode(mainHand, newMode);
-                        int slot = player.getInventory().selected + 36; // Главная рука
+                        int slot = player.getInventory().selected; // 0–8 для горячей панели
+                        Insanitymod.LOGGER.info("Sending ItemModePacket for slot: {}, isActive: {}, mode: {}", slot, SpecialItem.isActive(mainHand), newMode);
                         Insanitymod.NETWORK.sendToServer(new ItemModePacket(slot, SpecialItem.isActive(mainHand), newMode));
                     } else if (offHand.getItem() instanceof SpecialItem) {
                         int currentMode = SpecialItem.getMode(offHand);
                         int newMode = (currentMode + 1) % 3;
                         SpecialItem.setMode(offHand, newMode);
-                        int slot = 45; // Вторая рука
+                        int slot = 40; // Вторая рука
+                        Insanitymod.LOGGER.info("Sending ItemModePacket for slot: {}, isActive: {}, mode: {}", slot, SpecialItem.isActive(offHand), newMode);
                         Insanitymod.NETWORK.sendToServer(new ItemModePacket(slot, SpecialItem.isActive(offHand), newMode));
                     } else if (inCuriosSlot) {
                         Optional<SlotResult> slotResultOpt = CuriosApi.getCuriosHelper()
@@ -103,19 +93,8 @@ public class KeyHandler {
                             int newMode = (currentMode + 1) % 3;
                             SpecialItem.setMode(stack, newMode);
 
-                            // Получаем инвентарь Curios через getCuriosHandler
-                            LazyOptional<ICuriosItemHandler> curiosHandlerOpt = CuriosApi.getCuriosHelper().getCuriosHandler(player);
-                            curiosHandlerOpt.ifPresent(curiosHandler -> {
-                                SlotContext slotContext = slotResult.slotContext();
-                                Optional<ICurioStacksHandler> stacksHandlerOpt = curiosHandler.getStacksHandler(slotContext.getIdentifier());
-                                stacksHandlerOpt.ifPresent(stacksHandler -> {
-                                    IDynamicStackHandler stackHandler = stacksHandler.getStacks(); // Получаем IDynamicStackHandler
-                                    if (stackHandler != null) {
-                                        int slotIndex = slotContext.getIndex(); // Индекс слота из SlotContext
-                                        stackHandler.setStackInSlot(slotIndex, stack); // Обновляем стек в слоте
-                                    }
-                                });
-                            });
+                            SlotContext slotContext = slotResult.slotContext();
+                            CuriosApi.getCuriosHelper().setEquippedCurio(player, slotContext.getIdentifier(), slotContext.getIndex(), stack);
                         }
                     }
                 }
