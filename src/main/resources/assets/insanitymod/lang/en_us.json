@@ -1,7 +1,13 @@
 {
   "key.insanitymod.activate": "Activate Amulet",
   "key.insanitymod.switch_mode": "Switch Amulet Mode",
-  "category.insanitymod": "Insanity Mod",
-  "item.insanitymod.special_item": "Amulet"
-}
+  "category.insanitymod": "Insanity Modpack",
+  "item.insanitymod.amulet": "Amulet",
+  "item.insanitymod.special_item.mode": "Mode: %s",
+  "item.insanitymod.special_item.mode.invisibility": "Invisibility",
+  "item.insanitymod.special_item.mode.speed": "Speed",
+  "item.insanitymod.special_item.mode.strength": "Strength",
+  "item.insanitymod.special_item.mode.unknown": "Unknown",
+  "item.insanitymod.special_item.activate_key": "Press %s to activate",
+  "item.insanitymod.special_item.switch_key": "Press %s to switch mode"
 }

@@ -2,28 +2,22 @@ package org.intenses.insanitymod;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.LevelEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -32,176 +26,81 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.intenses.insanitymod.Items.SpecialItem;
 import org.intenses.insanitymod.network.ItemModePacket;
+import org.intenses.insanitymod.utils.SoulLampCheck;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 
-import java.io.File;
 import java.util.UUID;
 
+import org.intenses.insanitymod.utils.featherAttribute;
 
 @Mod(Insanitymod.MOD_ID)
 public class Insanitymod {
     public static final String MOD_ID = "insanitymod";
-
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    // UUID для модификаторов атрибутов
-    private static final UUID MAX_HEALTH_MODIFIER_UUID = UUID.fromString("5D6F0BA2-1186-46AC-B896-C61C5CEE99CC");
-    private static final String MAX_HEALTH_MODIFIER_NAME = "insanity_max_health_mod";
-    private static final UUID MAX_FEATHERS_MODIFIER_UUID = UUID.fromString("6E7F1CB3-2A92-4F1A-8D39-1123AB5678CD");
-    private static final String MAX_FEATHERS_MODIFIER_NAME = "insanity_max_feathers_mod";
-
-    // Регистрация предметов
+    //Registries
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
-    public static final RegistryObject<Item> SPECIAL_ITEM = ITEMS.register("special_item",
+    public static final RegistryObject<Item> SPECIAL_ITEM = ITEMS.register("amulet",
             () -> new SpecialItem(new Item.Properties().stacksTo(1)));
 
-    // Определение клавиш
-    public static final KeyMapping ACTIVATE_KEY = new KeyMapping(
-            "key.insanitymod.activate", GLFW.GLFW_KEY_G, "category.insanitymod");
-    public static final KeyMapping SWITCH_MODE_KEY = new KeyMapping(
-            "key.insanitymod.switch_mode", GLFW.GLFW_KEY_H, "category.insanitymod");
+    //Bindings
+    public static final KeyMapping ACTIVATE_KEY = new KeyMapping("key.insanitymod.activate", GLFW.GLFW_KEY_L, "category.insanitymod");
+    public static final KeyMapping SWITCH_MODE_KEY = new KeyMapping("key.insanitymod.switch_mode", GLFW.GLFW_KEY_H, "category.insanitymod");
 
-
-    // Сетевой канал
-    //private static final String PROTOCOL_VERSION = "1";
+    //Channel
+    private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel NETWORK = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation("insanitymod", "main"),
-            () -> "1.0",
-            "1.0"::equals,
-            "1.0"::equals
+            new ResourceLocation(MOD_ID, "main"),
+            () -> PROTOCOL_VERSION,
+            PROTOCOL_VERSION::equals,
+            PROTOCOL_VERSION::equals
     );
-
-    public static void registerPackets() {
-        int id = 0;
-        NETWORK.registerMessage(id++, ItemModePacket.class, ItemModePacket::encode, ItemModePacket::decode, ItemModePacket::handle);
-    }
 
     public Insanitymod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modEventBus.addListener(this::commonSetup);
         ITEMS.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(this);
-        registerPackets();
-    }
-
-    private void commonSetup(final FMLCommonSetupEvent event) {
-        LOGGER.info("Insanitymod initialized");
-        event.enqueueWork(() -> {
-            // Здесь можно добавить инициализацию сетевых пакетов, если нужно
-        });
-    }
-
-    private static boolean keyMappingsRegistered = false;
-
-    @SubscribeEvent
-    public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
-        if (!keyMappingsRegistered) {
-            event.register(ACTIVATE_KEY);
-            event.register(SWITCH_MODE_KEY);
-            Insanitymod.LOGGER.info("Registering key mappings for InsanityMod (once)");
-            keyMappingsRegistered = true;
-        }
-    }
-
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
-        LOGGER.info("HELLO from server starting");
+        NETWORK.registerMessage(0, ItemModePacket.class, ItemModePacket::encode, ItemModePacket::decode, ItemModePacket::handle);
     }
 
     @SubscribeEvent
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
-        setPlayerAttributes(event.getEntity());
-        processFirstJoin(event.getEntity());
+        featherAttribute.processFirstJoin(event.getEntity());
+        featherAttribute.setPlayerAttributes(event.getEntity());
+
     }
 
     @SubscribeEvent
     public void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
-        setPlayerAttributes(event.getEntity());
+        featherAttribute.setPlayerAttributes(event.getEntity());
         event.getEntity().addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 1));
     }
 
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         SoulLampCheck.ApplyEffect(event);
-        // Здесь можно добавить дополнительную логику, если нужно
     }
 
-//    @SubscribeEvent
-//    public void onWorldLoad(LevelEvent.Load event) {
-//        if (event.getLevel() instanceof ServerLevel serverLevel) {
-//            File worldFolder = serverLevel.getServer().getWorldPath(LevelResource.ROOT).toFile();
-//            File serverConfigFolder = new File(worldFolder, "serverconfig");
-//            deleteFilesInFolder(serverConfigFolder);
-//        }
-//    }
-
-    private static void deleteFilesInFolder(File folder) {
-        if (folder.exists() && folder.isDirectory()) {
-            File[] files = folder.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    if (file.isFile()) {
-                        file.delete();
-                    }
-                }
-            }
+    @SubscribeEvent
+    public void onWorldLoad(LevelEvent.Load event) {
+        if (event.getLevel() instanceof ServerLevel serverLevel) {
+            serverLevel.getServer().getWorldPath(LevelResource.ROOT).toFile();
         }
     }
 
-    private void processFirstJoin(net.minecraft.world.entity.player.Player player) {
-        CompoundTag persistentRoot = player.getPersistentData();
-        CompoundTag modData = persistentRoot.contains(MOD_ID, CompoundTag.TAG_COMPOUND)
-                ? persistentRoot.getCompound(MOD_ID)
-                : new CompoundTag();
 
-        if (!modData.getBoolean("first_join")) {
-            setPlayerAttributes(player);
-            player.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 1));
-            modData.putBoolean("first_join", true);
-            persistentRoot.put(MOD_ID, modData);
-        }
-    }
-
-    private void setPlayerAttributes(net.minecraft.world.entity.player.Player player) {
-        if (player != null && !player.level.isClientSide()) {
-            // Модификатор максимального здоровья
-            applyModifier(player, net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH,
-                    MAX_HEALTH_MODIFIER_UUID, MAX_HEALTH_MODIFIER_NAME, -14.0f);
-
-            // Модификатор максимальной выносливости (feathers)
-            Attribute featherAttr = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation("feathers", "max_feathers"));
-            if (featherAttr != null) {
-                applyModifier(player, featherAttr, MAX_FEATHERS_MODIFIER_UUID, MAX_FEATHERS_MODIFIER_NAME, -18.0f);
-            } else {
-                LOGGER.warn("[INSANITY] Attribute 'feathers:max_feathers' not found for player {}", player.getScoreboardName());
-            }
-        }
-    }
-
-    private static void applyModifier(net.minecraft.world.entity.player.Player player, Attribute attribute, UUID modifierUUID, String modifierName, float amount) {
-        AttributeInstance attrInstance = player.getAttribute(attribute);
-        if (attrInstance == null) {
-            LOGGER.warn("[INSANITY] Attribute {} not found for player {}", attribute.getDescriptionId(), player.getScoreboardName());
-            return;
-        }
-
-        AttributeModifier existingModifier = attrInstance.getModifier(modifierUUID);
-        if (existingModifier != null) {
-            attrInstance.removeModifier(modifierUUID);
-            LOGGER.info("[INSANITY] Removed existing modifier {} for player {}", modifierName, player.getScoreboardName());
-        }
-
-        AttributeModifier modifier = new AttributeModifier(modifierUUID, modifierName, amount, AttributeModifier.Operation.ADDITION);
-        attrInstance.addPermanentModifier(modifier);
-        LOGGER.info("[INSANITY] Applied modifier {} ({} {}) for player {}", modifierName, amount, attribute.getDescriptionId(), player.getScoreboardName());
-    }
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            LOGGER.info("Insanitymod client setup completed");
+            event.enqueueWork(() -> {
+                ItemProperties.register(SPECIAL_ITEM.get(), new ResourceLocation("insanitymod", "is_active"),
+                        (stack, level, entity, seed) -> SpecialItem.isActive(stack) ? 1.0F : 0.0F);
+                ItemProperties.register(SPECIAL_ITEM.get(), new ResourceLocation("insanitymod", "mode"),
+                        (stack, level, entity, seed) -> (float) SpecialItem.getMode(stack));
+            });
         }
     }
 }
