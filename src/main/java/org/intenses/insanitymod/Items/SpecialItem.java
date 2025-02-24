@@ -205,24 +205,29 @@ public class SpecialItem extends Item implements ICurio {
             default -> "unknown";
         }).withStyle(style -> style
                 .withColor(0xF1C232) // Синий цвет для режима
-                .withBold(true));
+                .withBold(true)
+                .withItalic(true));
         tooltip.add(modeText);
 
         // Получаем тексты биндов для активации и переключения режима
-        KeyMapping activateKey = Insanitymod.ACTIVATE_KEY; // Предполагается, что это определено в Insanitymod.java
-        KeyMapping switchKey = Insanitymod.SWITCH_MODE_KEY; // Предполагается, что это определено в Insanitymod.java
+        KeyMapping activateKey = Insanitymod.ACTIVATE_KEY;
+        KeyMapping switchKey = Insanitymod.SWITCH_MODE_KEY;
         String activateKeyText = activateKey.getTranslatedKeyMessage().getString().toUpperCase(); // Получаем текст клавиши (например, "G")
         String switchKeyText = switchKey.getTranslatedKeyMessage().getString().toUpperCase(); // Получаем текст клавиши (например, "H")
 
         // Добавляем подпись для активации
         tooltip.add(Component.translatable("item.insanitymod.special_item.activate_key", activateKeyText)
                 .withStyle(style -> style
-                        .withColor(0x808080))); // Серый цвет для текста
+                        .withColor(0x808080)
+                        .withItalic(true)
+                        .withBold(true))); // Серый цвет для текста
 
         // Добавляем подпись для смены режима
         tooltip.add(Component.translatable("item.insanitymod.special_item.switch_key", switchKeyText)
                 .withStyle(style -> style
-                        .withColor(0x808080))); // Серый цвет для текста
+                        .withColor(0x808080)
+                        .withItalic(true)
+                        .withBold(true))); // Серый цвет для текста
     }
 
 }

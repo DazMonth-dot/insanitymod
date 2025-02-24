@@ -26,11 +26,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.intenses.insanitymod.Items.SpecialItem;
 import org.intenses.insanitymod.network.ItemModePacket;
-import org.intenses.insanitymod.utils.SoulLampCheck;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 
-import java.util.UUID;
+
 
 import org.intenses.insanitymod.utils.featherAttribute;
 
@@ -77,10 +76,10 @@ public class Insanitymod {
         event.getEntity().addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 1));
     }
 
-    @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        SoulLampCheck.ApplyEffect(event);
-    }
+//    @SubscribeEvent
+//    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+//        SoulLampCheck.ApplyEffect(event);
+//    }
 
     @SubscribeEvent
     public void onWorldLoad(LevelEvent.Load event) {
