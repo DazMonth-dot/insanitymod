@@ -4,7 +4,6 @@ import com.elenai.feathers.api.FeathersHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -205,15 +204,15 @@ public class SpecialItem extends Item implements ICurio {
             case 2 -> "strength";
             default -> "unknown";
         }).withStyle(style -> style
-                .withColor(0x0000FF) // Синий цвет для режима
+                .withColor(0xF1C232) // Синий цвет для режима
                 .withBold(true));
         tooltip.add(modeText);
 
         // Получаем тексты биндов для активации и переключения режима
         KeyMapping activateKey = Insanitymod.ACTIVATE_KEY; // Предполагается, что это определено в Insanitymod.java
         KeyMapping switchKey = Insanitymod.SWITCH_MODE_KEY; // Предполагается, что это определено в Insanitymod.java
-        String activateKeyText = activateKey.getTranslatedKeyMessage().getString(); // Получаем текст клавиши (например, "G")
-        String switchKeyText = switchKey.getTranslatedKeyMessage().getString(); // Получаем текст клавиши (например, "H")
+        String activateKeyText = activateKey.getTranslatedKeyMessage().getString().toUpperCase(); // Получаем текст клавиши (например, "G")
+        String switchKeyText = switchKey.getTranslatedKeyMessage().getString().toUpperCase(); // Получаем текст клавиши (например, "H")
 
         // Добавляем подпись для активации
         tooltip.add(Component.translatable("item.insanitymod.special_item.activate_key", activateKeyText)
