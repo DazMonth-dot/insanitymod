@@ -4,45 +4,58 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
-
+import org.intenses.insanitymod.Insanitymod;
 import org.intenses.insanitymod.Items.SpecialItem;
-
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotResult;
 
 import java.util.function.Supplier;
 
 public class ItemModePacket {
-    private final int slot; // Слот инвентаря (например, 0 для главной руки, 1 для второй, или слот Curios)
     private final boolean isActive;
-    private final int mode;
+    private final int previousMode;
+    private final int newMode;
 
-    public ItemModePacket(int slot, boolean isActive, int mode) {
-        this.slot = slot;
+    public ItemModePacket(boolean isActive, int previousMode, int newMode) {
         this.isActive = isActive;
-        this.mode = mode;
+        this.previousMode = previousMode;
+        this.newMode = newMode;
     }
 
-    // Метод для отправки данных в буфер
-    public static void encode(ItemModePacket msg, FriendlyByteBuf buf) {
-        buf.writeInt(msg.slot);
-        buf.writeBoolean(msg.isActive);
-        buf.writeInt(msg.mode);
+    public static void encode(ItemModePacket packet, FriendlyByteBuf buf) {
+        buf.writeBoolean(packet.isActive);
+        buf.writeInt(packet.previousMode);
+        buf.writeInt(packet.newMode);
     }
 
-    // Метод для чтения данных из буфера
     public static ItemModePacket decode(FriendlyByteBuf buf) {
-        return new ItemModePacket(buf.readInt(), buf.readBoolean(), buf.readInt());
+        return new ItemModePacket(buf.readBoolean(), buf.readInt(), buf.readInt());
     }
 
-    // Обработчик пакета на стороне сервера
-    public static void handle(ItemModePacket msg, Supplier<NetworkEvent.Context> ctx) {
+    public static void handle(ItemModePacket packet, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             ServerPlayer player = ctx.get().getSender();
-            if (player != null) {
-                // Проверяем слоты в инвентаре игрока
-                ItemStack stack = player.getInventory().getItem(msg.slot);
-                if (stack.getItem() instanceof SpecialItem) {
-                    SpecialItem.setActive(stack, msg.isActive);
-                    SpecialItem.setMode(stack, msg.mode);
+            if (player == null) {
+                return;
+            }
+
+            ItemStack stack = CuriosApi.getCuriosHelper()
+                    .findFirstCurio(player, Insanitymod.SPECIAL_ITEM.get())
+                    .filter(result -> "necklace".equals(result.slotContext().identifier()))
+                    .map(SlotResult::stack)
+                    .orElse(ItemStack.EMPTY);
+
+            if (stack.isEmpty()) {
+                return;
+            } else if (stack.getItem() instanceof SpecialItem specialItem) {
+                specialItem.setActive(stack, packet.isActive);
+                int normalizedNewMode = specialItem.normalizeMode(packet.newMode); // Нормализуем новый режим
+                specialItem.setMode(stack, normalizedNewMode);
+                if (packet.isActive) {
+                    int normalizedPreviousMode = specialItem.normalizeMode(packet.previousMode); // Нормализуем предыдущий режим
+                    specialItem.applyEffects(player, normalizedPreviousMode, normalizedNewMode); // Удаляем эффект предыдущего режима и применяем новый
+                } else {
+                    specialItem.removeEffects(player, normalizedNewMode); // Удаляем эффект нормализованного текущего режима при деактивации
                 }
             }
         });

@@ -1,5 +1,13 @@
 {
   "key.insanitymod.activate": "Активировать Амулет",
   "key.insanitymod.switch_mode": "Поменять режим Амулета",
-  "category.insanitymod": "Insanity Mod"
+  "category.insanitymod": "Insanity Modpack",
+  "item.insanitymod.amulet": "Триумвират Всевластия",
+  "item.insanitymod.special_item.mode": "Режим: %s",
+  "item.insanitymod.special_item.mode.invisibility": "Невидимость",
+  "item.insanitymod.special_item.mode.speed": "Скорость",
+  "item.insanitymod.special_item.mode.strength": "Сила",
+  "item.insanitymod.special_item.mode.unknown": "Неизвестно,",
+  "item.insanitymod.special_item.activate_key": "Нажмите %s чтобы активировать",
+  "item.insanitymod.special_item.switch_key": "Нажмите %s чтобы поменять режим"
 }
