@@ -22,13 +22,11 @@ public class AmnesiaScrollHandler {
         if (itemId != null && itemId.equals(new ResourceLocation("skilltree", "amnesia_scroll"))) {
             if (!player.level.isClientSide) {
                 applyEffectsToPlayer(player);
-                event.setCanceled(true);
             }
         }
     }
 
     private static void applyEffectsToPlayer(Player player) {
-        // Применяем 5 эффектов к игроку
         player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 600, 0));
         player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 600, 1));
         player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 600, 1));

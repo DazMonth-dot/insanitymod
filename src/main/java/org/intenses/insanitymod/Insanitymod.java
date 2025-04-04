@@ -3,6 +3,7 @@ package org.intenses.insanitymod;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -12,6 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -20,18 +22,29 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.intenses.insanitymod.Items.ShieldTweaks;
 import org.intenses.insanitymod.Items.SpecialItem;
+import org.intenses.insanitymod.music.ModSounds;
 import org.intenses.insanitymod.network.ItemModePacket;
 
-import org.intenses.insanitymod.utils.EngulfAddon;
 import org.intenses.insanitymod.utils.featherAttribute;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
+
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 @Mod(Insanitymod.MOD_ID)
 public class Insanitymod {
@@ -56,22 +69,54 @@ public class Insanitymod {
             PROTOCOL_VERSION::equals
     );
 
+    private static final Collection<AbstractMap.SimpleEntry<Runnable, Integer>> workQueue = new ConcurrentLinkedQueue<>();
+    private static int messageID = 0;
+
     public Insanitymod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
         ITEMS.register(modEventBus);
+        ModSounds.register(modEventBus);
         modEventBus.addListener(this::setup);
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new EngulfAddon());
-        NETWORK.registerMessage(0, ItemModePacket.class, ItemModePacket::encode, ItemModePacket::decode, ItemModePacket::handle);
+        MinecraftForge.EVENT_BUS.register(new ShieldTweaks());
 
-        // Регистрация серверного и клиентского конфигов для механики тьмы
-//        ModLoadingContext.get().registerConfig(ForgeConfigSpec.Type.COMMON, ServerDarknessConfig.init(new ForgeConfigSpec.Builder()).build());
-//        ModLoadingContext.get().registerConfig(ForgeConfigSpec.Type.CLIENT, ClientDarknessConfig.init(new ForgeConfigSpec.Builder()).build());
-//        PsychosisPacketHandler.register();
+
+        NETWORK.registerMessage(0, ItemModePacket.class, ItemModePacket::encode, ItemModePacket::decode, ItemModePacket::handle);
     }
 
-    private void setup(final FMLCommonSetupEvent event){
-        new EngulfAddon().loadConfig();
+    public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {
+        NETWORK.registerMessage(messageID, messageType, encoder, decoder, messageConsumer);
+        ++messageID;
+    }
+
+    // Очередь задач для выполнения
+    public static void queueServerWork(int tick, Runnable action) {
+        workQueue.add(new AbstractMap.SimpleEntry<>(action, tick));
+    }
+
+    @SubscribeEvent
+    public void tick(TickEvent.ServerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            List<AbstractMap.SimpleEntry<Runnable, Integer>> actions = new ArrayList<>();
+            workQueue.forEach((work) -> {
+                work.setValue(work.getValue() - 1);
+                if (work.getValue() == 0) {
+                    actions.add(work);
+                }
+            });
+            actions.forEach((e) -> e.getKey().run());
+            workQueue.removeAll(actions);
+        }
+    }
+
+    private void setup(final FMLCommonSetupEvent event) {
+        //SOUND_EVENTS.register(FMLJavaModLoadingContext.get().getModEventBus())
+        event.enqueueWork(() -> {
+            LOGGER.info("[Insanitymod] Loading config...");
+            ShieldTweaks.loadConfig();
+        });
+
     }
 
     @SubscribeEvent
@@ -104,12 +149,5 @@ public class Insanitymod {
                         (stack, level, entity, seed) -> (float) SpecialItem.getMode(stack));
             });
         }
-    }
-
-    // Добавляем источник урона от тьмы
-    public static final DamageSource DARKNESS_DAMAGE = new DamageSource("insanitymod.darkness").bypassArmor().setMagic();
-
-    public static DamageSource createDarknessDamage() {
-        return DARKNESS_DAMAGE;
     }
 }
