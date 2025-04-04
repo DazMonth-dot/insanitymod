@@ -63,3 +63,17 @@ mandatory = true
 versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
+
+[[dependencies."${mod_id}"]]
+modId="curios"
+mandatory=true
+versionRange="[1.19.2-5.1.6.4,)"
+ordering="AFTER"
+side="CLIENT"
+
+[[dependencies."${mod_id}"]]
+modId="feathers"
+mandatory=true
+versionRange="[1.1.2,)"
+ordering="AFTER"
+side="CLIENT"

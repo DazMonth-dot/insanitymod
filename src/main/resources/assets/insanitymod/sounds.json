@@ -1,0 +1,26 @@
+{
+  "backward": {
+    "subtitle": "sounds.insanitymod.backward",
+    "sounds": [
+      "insanitymod:backward"
+    ]
+  },
+  "confirm": {
+    "subtitle": "sounds.insanitymod.confirm",
+    "sounds": [
+      "insanitymod:confirm"
+    ]
+  },
+  "forward": {
+    "subtitle": "sounds.insanitymod.forward",
+    "sounds": [
+      "insanitymod:forward"
+    ]
+  },
+  "skill_point_learn": {
+    "subtitle": "sounds.insanitymod.skill_point_learn",
+    "sounds": [
+      "insanitymod:skill_point_learn"
+    ]
+  }
+}

@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.intenses.insanitymod.Insanitymod;
 
 @Mod.EventBusSubscriber(modid = Insanitymod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = net.minecraftforge.api.distmarker.Dist.CLIENT)
-public class ClientModEvents {
+public class ClientKeysModEvents {
 
     @SubscribeEvent
     public static void registerKeyMappings(RegisterKeyMappingsEvent event) {

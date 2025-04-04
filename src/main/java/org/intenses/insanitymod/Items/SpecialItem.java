@@ -195,9 +195,10 @@ public class SpecialItem extends Item implements ICurio {
     @Override
     public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level level, @Nonnull List<Component> tooltip, @Nonnull TooltipFlag flag) {
         super.appendHoverText(stack, level, tooltip, flag);
+        tooltip.add(Component.translatable("item.insanitymod.special_item.desc")
+                .withStyle(style -> style.withColor(0xC71585).withItalic(true)));
 
-        // Добавляем текущий режим
-        int mode = normalizeMode(getMode(stack)); // Нормализуем режим для tooltip
+        int mode = normalizeMode(getMode(stack));
         Component modeText = Component.translatable("item.insanitymod.special_item.mode." + switch (mode) {
             case 0 -> "invisibility";
             case 1 -> "speed";

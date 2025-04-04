@@ -1,0 +1,8 @@
+{
+  "package": "org.intenses.insanitymod.mixins",
+  "refmap": "insanitymod.mixins.refmap.json",
+  "mixins": ["SkillTreeScreenMixin","DodgeMixin","DarknessMixin","LightSanityMixin","PersonalityAccessor"
+  ],
+  "client": ["SkillTreeScreenMixin","DodgeMixin","DarknessMixin","LightSanityMixin","PersonalityAccessor"
+  ]
+}

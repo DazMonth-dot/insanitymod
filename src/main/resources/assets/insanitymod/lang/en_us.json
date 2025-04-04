@@ -9,5 +9,12 @@
   "item.insanitymod.special_item.mode.strength": "Strength",
   "item.insanitymod.special_item.mode.unknown": "Unknown",
   "item.insanitymod.special_item.activate_key": "Press %s to activate",
-  "item.insanitymod.special_item.switch_key": "Press %s to switch mode"
+  "item.insanitymod.special_item.switch_key": "Press %s to switch mode",
+  "sounds.insanitymod.backward": "",
+  "sounds.insanitymod.confirm": "",
+  "sounds.insanitymod.forward": "",
+  "sounds.insanitymod.skill_point_learn": "",
+  "item.insanitymod.special_item.desc": "Working only when equipped"
+
+
 }

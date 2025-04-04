@@ -9,5 +9,10 @@
   "item.insanitymod.special_item.mode.strength": "Сила",
   "item.insanitymod.special_item.mode.unknown": "Неизвестно,",
   "item.insanitymod.special_item.activate_key": "Нажмите %s чтобы активировать",
-  "item.insanitymod.special_item.switch_key": "Нажмите %s чтобы поменять режим"
+  "item.insanitymod.special_item.switch_key": "Нажмите %s чтобы поменять режим",
+  "sounds.insanitymod.backward": "",
+  "sounds.insanitymod.confirm": "",
+  "sounds.insanitymod.forward": "",
+  "sounds.insanitymod.skill_point_learn": "",
+  "item.insanitymod.special_item.desc": "Работает только, когда надето"
 }

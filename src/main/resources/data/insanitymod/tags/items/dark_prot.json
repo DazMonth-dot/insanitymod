@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "quark:paper_lantern_sakura",
+    "supplementaries:crimson_lantern",
+    "quark:paper_lantern",
+    "minecraft:torch"
+  ]
+}
