@@ -83,7 +83,11 @@ minecraft {
 }
 
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
+sourceSets.main.resources
+        {
+            srcDir 'src/generated/resources'
+            //srcDirs 'src/main/resources'
+        }
 
 repositories {
     maven { url = "https://cursemaven.com" }
@@ -129,6 +133,7 @@ dependencies { //TODO: change all version to variables in gradle.properties
 
     compileOnly fg.deobf("io.redspace.ironsspellbooks:irons_spellbooks:${irons_spells_version}:api")
     runtimeOnly fg.deobf("io.redspace.ironsspellbooks:irons_spellbooks:${irons_spells_version}")
+    implementation fg.deobf("io.redspace.ironsspellbooks:irons_spellbooks:${irons_spells_version}")
 
     compileOnly fg.deobf("curse.maven:Sanity-876448:4632886")
     runtimeOnly fg.deobf("curse.maven:Sanity-876448:4632886")
