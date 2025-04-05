@@ -14,7 +14,11 @@
   "sounds.insanitymod.confirm": "",
   "sounds.insanitymod.forward": "",
   "sounds.insanitymod.skill_point_learn": "",
-  "item.insanitymod.special_item.desc": "Working only when equipped"
+  "item.insanitymod.special_item.desc": "Working only when equipped",
+  "school.insanitymod.bloodtp": "Blood Teleportation",
+  "school.insanitymod.icetp": "Ice Teleportation",
+  "school.insanitymod.endtp": "Ender Teleportation",
+  "school.insanitymod.restoration": "Restoration"
 
 
 }

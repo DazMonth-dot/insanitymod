@@ -2,17 +2,21 @@ package org.intenses.insanitymod;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.level.LevelEvent;
@@ -28,15 +32,21 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.resource.PathPackResources;
 import org.intenses.insanitymod.Items.ShieldTweaks;
 import org.intenses.insanitymod.Items.SpecialItem;
+import org.intenses.insanitymod.magic.AtributesInfo;
+import org.intenses.insanitymod.magic.NewMagicSchoolsRegistry;
 import org.intenses.insanitymod.music.ModSounds;
 import org.intenses.insanitymod.network.ItemModePacket;
 
-import org.intenses.insanitymod.utils.featherAttribute;
+import org.intenses.insanitymod.utils.ModAttributes;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -81,6 +91,11 @@ public class Insanitymod {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new ShieldTweaks());
 
+        NewMagicSchoolsRegistry.register(modEventBus);
+        AtributesInfo.register(modEventBus);
+
+
+
 
         NETWORK.registerMessage(0, ItemModePacket.class, ItemModePacket::encode, ItemModePacket::decode, ItemModePacket::handle);
     }
@@ -90,10 +105,6 @@ public class Insanitymod {
         ++messageID;
     }
 
-    // Очередь задач для выполнения
-    public static void queueServerWork(int tick, Runnable action) {
-        workQueue.add(new AbstractMap.SimpleEntry<>(action, tick));
-    }
 
     @SubscribeEvent
     public void tick(TickEvent.ServerTickEvent event) {
@@ -115,19 +126,22 @@ public class Insanitymod {
         event.enqueueWork(() -> {
             LOGGER.info("[Insanitymod] Loading config...");
             ShieldTweaks.loadConfig();
+            Minecraft.getInstance().getResourceManager().listResources("models/item", path -> path.getPath().endsWith(".json")).forEach((res, stream) -> {
+                Insanitymod.LOGGER.info("Found model: {}", res);
+            });
         });
 
     }
 
     @SubscribeEvent
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
-        featherAttribute.processFirstJoin(event.getEntity());
-        featherAttribute.setPlayerAttributes(event.getEntity());
+        ModAttributes.processFirstJoin(event.getEntity());
+        ModAttributes.setPlayerAttributes(event.getEntity());
     }
 
     @SubscribeEvent
     public void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
-        featherAttribute.setPlayerAttributes(event.getEntity());
+        ModAttributes.setPlayerAttributes(event.getEntity());
         event.getEntity().addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 1));
     }
 
