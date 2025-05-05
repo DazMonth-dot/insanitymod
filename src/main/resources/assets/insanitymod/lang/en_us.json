@@ -18,7 +18,22 @@
   "school.insanitymod.bloodtp": "Blood Teleportation",
   "school.insanitymod.icetp": "Ice Teleportation",
   "school.insanitymod.endtp": "Ender Teleportation",
-  "school.insanitymod.restoration": "Restoration"
-
-
+  "school.insanitymod.restoration": "Restoration",
+  "attribute.insanity.restoration_spell_power": "Restoration Spell power",
+  "attribute.insanity.icetp_spell_power": "Ice Teleportation Spell Power",
+  "attribute.insanity.endtp_spell_power": "End Teleportation Spell Power",
+  "attribute.insanity.bloodtp_spell_power": "Blood Teleportation Spell Power",
+  "attribute.insanity.restoration_magic_resist": "Restoration magic resist",
+  "attribute.insanity.icetp_magic_resist": "Ice Teleportation magic resist",
+  "attribute.insanity.endtp_magic_resist": "End Teleportation magic resist",
+  "attribute.insanity.bloodtp_magic_resist": "Blood Teleportation magic resist",
+  "insanity.panicscale.stage.0": "Calm",
+  "insanity.panicscale.stage.1": "Anxiety",
+  "insanity.panicscale.stage.2": "Fear",
+  "insanity.panicscale.stage.3": "Pavor Nocturnus",
+  "insanity.panicscale.gamemode": "You can set or get panic stage only in creative or spectator mode",
+  "insanity.panicscale.set": "Applied panic stage: ",
+  "insanity.panicscale.current_stage": "Current panic stage: ",
+  "insanity.panicscale.incorrect": "Incorrect stage",
+  "insanity.panicscale.gamemode_error": "You should be in creative or spectator mode"
 }

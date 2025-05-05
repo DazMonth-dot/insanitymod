@@ -20,7 +20,7 @@ public class AmnesiaScrollHandler {
         ItemStack itemStack = event.getItemStack();
         ResourceLocation itemId = ForgeRegistries.ITEMS.getKey(itemStack.getItem());
         if (itemId != null && itemId.equals(new ResourceLocation("skilltree", "amnesia_scroll"))) {
-            if (!player.level.isClientSide) {
+            if (!player.level.isClientSide && !player.isCreative() && !player.isSpectator()) {
                 applyEffectsToPlayer(player);
             }
         }

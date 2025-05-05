@@ -20,6 +20,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class NewMagicSchoolsRegistry extends SchoolRegistry {
 
+
+
+
     public static final TagKey<Item> ICETP_FOCUS = ItemTags.create(new ResourceLocation(Insanitymod.MOD_ID, "icetp_focus"));
     public static final TagKey<Item> BLOODTP_FOCUS = ItemTags.create(new ResourceLocation(Insanitymod.MOD_ID, "bloodtp_focus"));
     public static final TagKey<Item> ENDTP_FOCUS = ItemTags.create(new ResourceLocation(Insanitymod.MOD_ID, "endtp_focus"));

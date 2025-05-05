@@ -63,6 +63,10 @@
     "quark:yellow_crystal_lamp",
     "quark:green_crystal_lamp",
     "quark:orange_crystal_lamp",
-    "quark:red_crystal_lamp"
+    "quark:red_crystal_lamp",
+    "enlightened_end:helium_lantern",
+    "enlightened_end:xenon_lantern",
+    "byg:cryptic_lantern",
+    "minecraft:lantern"
   ]
 }

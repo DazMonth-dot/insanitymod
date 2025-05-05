@@ -141,9 +141,14 @@ dependencies { //TODO: change all version to variables in gradle.properties
     compileOnly fg.deobf("curse.maven:Personality-415974:${Personality}")
     runtimeOnly fg.deobf("curse.maven:Personality-415974:${Personality}")
 
+    compileOnly fg.deobf("curse.maven:Jukebox-891937:4708924")
+    runtimeOnly fg.deobf("curse.maven:Jukebox-891937:4708924")
 
+    compileOnly fg.deobf("curse.maven:Parcool-482378:6189393")
+    runtimeOnly fg.deobf("curse.maven:Parcool-482378:6189393")
 
-
+    compileOnly fg.deobf("curse.maven:Paragliders-289240:4478230")
+    runtimeOnly fg.deobf("curse.maven:Paragliders-289240:4478230")
 }
 
 tasks.named('processResources', ProcessResources).configure {

@@ -7,17 +7,30 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import org.intenses.insanitymod.Insanitymod;
 
 import java.util.UUID;
 
+
+@Mod.EventBusSubscriber(modid = Insanitymod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModAttributes {
+
+    @SubscribeEvent
+    public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
+        ModAttributes.processFirstJoin(event.getEntity());
+        ModAttributes.setPlayerAttributes(event.getEntity());
+    }
+
+    @SubscribeEvent
+    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+        ModAttributes.setPlayerAttributes(event.getEntity());
+        event.getEntity().addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 1));
+    }
 
     public static void processFirstJoin(Player player) {
         CompoundTag persistentRoot = player.getPersistentData();
@@ -33,17 +46,19 @@ public class ModAttributes {
     public static void setPlayerAttributes(Player player) {
         if (player != null && !player.level.isClientSide()) {
             applyModifier(player, net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH,
-                    UUID.fromString("5D6F0BA2-1186-46AC-B896-C61C5CEE99CC"), "insanity_max_health_mod", -14);
+                    UUID.fromString("5D6F0BA2-1186-46AC-B896-C61C5CEE99CC"), "insanity_max_health_mod", -10);
 
-            Attribute featherAttr = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation("feathers", "max_feathers"));
-            if (featherAttr != null && player.getAttribute(featherAttr) != null) {
+            Attribute featherAttr = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation("feathers", "feathers.max_feathers"));
                 applyModifier(player, featherAttr,
                         UUID.fromString("6E7F1CB3-2A92-4F1A-8D39-1123AB5678CD"), "insanity_max_feathers_mod", -16);
-            }
+
+
+
 
             player.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 1));
         }
     }
+
 
     private static void applyModifier(Player player, Attribute attribute, UUID modifierUUID, String modifierName, float amount) {
         AttributeInstance attrInstance = player.getAttribute(attribute);

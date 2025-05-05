@@ -22,5 +22,104 @@
     "sounds": [
       "insanitymod:skill_point_learn"
     ]
+  },
+  "cave.cave1": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "minecraft:ambient/cave/cave1",
+        "type": "event"
+      }
+    ]
+  },
+  "cave.cave2": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "minecraft:ambient/cave/cave2",
+        "type": "event"
+      }
+    ]
+  },
+  "cave.cave4": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "minecraft:ambient/cave/cave4",
+        "type": "event"
+      }
+    ]
+  },
+  "cave.cave10": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "minecraft:ambient/cave/cave10",
+        "type": "event"
+      }
+    ]
+  },
+  "cave.cave11": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "minecraft:ambient/cave/cave11",
+        "type": "event"
+      }
+    ]
+  },
+  "cave.cave12": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "minecraft:ambient/cave/cave12",
+        "type": "event"
+      }
+    ]
+  },
+  "cave.cave13": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "minecraft:ambient/cave/cave13",
+        "type": "event"
+      }
+    ]
+  },
+  "cave.cave14": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "minecraft:ambient/cave/cave14",
+        "type": "event"
+      }
+    ]
+  },
+  "cave.cave16": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "minecraft:ambient/cave/cave16",
+        "type": "event"
+      }
+    ]
+  },
+  "cave.cave17": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "minecraft:ambient/cave/cave17",
+        "type": "event"
+      }
+    ]
+  },
+  "cave.cave19": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "minecraft:ambient/cave/cave19",
+        "type": "event"
+      }
+    ]
   }
 }

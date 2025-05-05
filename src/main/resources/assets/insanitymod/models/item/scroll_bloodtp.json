@@ -1,6 +1,6 @@
 {
   "parent": "irons_spellbooks:item/scroll",
   "textures": {
-    "layer0": "minecraft:item/paper"
+    "layer0": "irons_spellbooks:item/scroll_blood"
   }
 }
