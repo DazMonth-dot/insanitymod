@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "cataclysm:soul_render",
+    "simplyswords:runic_halberd",
+    "knavesneeds:twilight_forest/ironwood/halberd",
+    "knavesneeds:twilight_forest/knightmetal/halberd",
+    "knavesneeds:twilight_forest/steeleaf/halberd",
+    "knavesneeds:byg/pendorite/halberd",
+    "simplyswords:iron_halberd",
+    "simplyswords:gold_halberd",
+    "simplyswords:diamond_halberd",
+    "simplyswords:netherite_halberd",
+    "blue_skies:aquite/halberd",
+    "blue_skies:bluebright_wood/halberd",
+    "blue_skies:charoite/halberd",
+    "blue_skies:cherry_wood/halberd",
+    "blue_skies:starlit_wood/halberd",
+    "blue_skies:pyrope/halberd",
+    "blue_skies:maple_wood/halberd",
+    "blue_skies:lunar_wood/halberd",
+    "blue_skies:lunar_stone/halberd",
+    "blue_skies:horizonite/halberd",
+    "blue_skies:frostbright_wood/halberd",
+    "blue_skies:dusk_wood/halberd",
+    "blue_skies:diopside/halberd",
+    "blue_skies:turquoise_stone/halberd",
+    "knavesneeds:twilight_forest/fiery/halberd"
+
+  ]
+}

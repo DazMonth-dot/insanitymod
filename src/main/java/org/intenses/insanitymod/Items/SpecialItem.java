@@ -16,6 +16,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.ModList;
 import org.intenses.insanitymod.Insanitymod;
+import org.intenses.insanitymod.network.ClientKeysModEvents;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.SlotResult;
@@ -210,25 +211,26 @@ public class SpecialItem extends Item implements ICurio {
                 .withItalic(true));
         tooltip.add(modeText);
 
-        // Получаем тексты биндов для активации и переключения режима
-        KeyMapping activateKey = Insanitymod.ACTIVATE_KEY;
-        KeyMapping switchKey = Insanitymod.SWITCH_MODE_KEY;
-        String activateKeyText = activateKey.getTranslatedKeyMessage().getString().toUpperCase(); // Получаем текст клавиши (например, "G")
-        String switchKeyText = switchKey.getTranslatedKeyMessage().getString().toUpperCase(); // Получаем текст клавиши (например, "H")
+        if (level != null && level.isClientSide) {
+            KeyMapping activateKey = ClientKeysModEvents.ACTIVATE_KEY;
+            KeyMapping switchKey = ClientKeysModEvents.SWITCH_MODE_KEY;
+            String activateKeyText = activateKey.getTranslatedKeyMessage().getString().toUpperCase(); // Получаем текст клавиши (например, "G")
+            String switchKeyText = switchKey.getTranslatedKeyMessage().getString().toUpperCase(); // Получаем текст клавиши (например, "H")
 
-        // Добавляем подпись для активации
-        tooltip.add(Component.translatable("item.insanitymod.special_item.activate_key", activateKeyText)
-                .withStyle(style -> style
-                        .withColor(0x808080)
-                        .withItalic(true)
-                        .withBold(true))); // Серый цвет для текста
+            // Добавляем подпись для активации
+            tooltip.add(Component.translatable("item.insanitymod.special_item.activate_key", activateKeyText)
+                    .withStyle(style -> style
+                            .withColor(0x808080)
+                            .withItalic(true)
+                            .withBold(true))); // Серый цвет для текста
 
-        // Добавляем подпись для смены режима
-        tooltip.add(Component.translatable("item.insanitymod.special_item.switch_key", switchKeyText)
-                .withStyle(style -> style
-                        .withColor(0x808080)
-                        .withItalic(true)
-                        .withBold(true))); // Серый цвет для текста
+            // Добавляем подпись для смены режима
+            tooltip.add(Component.translatable("item.insanitymod.special_item.switch_key", switchKeyText)
+                    .withStyle(style -> style
+                            .withColor(0x808080)
+                            .withItalic(true)
+                            .withBold(true))); // Серый цвет для текста
+        }
     }
 
 }

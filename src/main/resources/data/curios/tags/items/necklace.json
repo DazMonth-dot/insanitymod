@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "insanitymod:amulet"
+    "insanitymod:amulet",
+    "blue_skies:poison_arc"
   ]
 }

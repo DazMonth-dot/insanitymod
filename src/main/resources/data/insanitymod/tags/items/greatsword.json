@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "born_in_chaos_v1:soul_cutlass",
+    "born_in_chaos_v1:soulbane",
+    "gnumus:vintage_gnumus_cutlass",
+    "simplyswords:runic_cutlass"
+    "knavesneeds:twilight_forest/fiery/cutlass",
+    "knavesneeds:twilight_forest/steeleaf/cutlass",
+    "knavesneeds:byg/pendorite/cutlass",
+    "simplyswords:iron_cutlass",
+    "simplyswords:gold_cutlass",
+    "simplyswords:diamond_cutlass",
+    "simplyswords:netherite_cutlass",
+    "knavesneeds:twilight_forest/knightmetal/cutlass",
+    "knavesneeds:twilight_forest/ironwood/cutlass",
+    "blue_skies:diopside/cutlass",
+    "blue_skies:dusk_wood/cutlass",
+    "blue_skies:frostbright_wood/cutlass",
+    "blue_skies:horizonite/cutlass",
+    "blue_skies:lunar_stone/cutlass",
+    "blue_skies:lunar_wood/cutlass",
+    "blue_skies:pyrope/cutlass",
+    "blue_skies:starlit_wood/cutlass",
+    "blue_skies:maple_wood/cutlass",
+    "blue_skies:aquite/cutlass",
+    "blue_skies:bluebright_wood/cutlass",
+    "blue_skies:charoite/cutlass",
+    "blue_skies:cherry_wood/cutlass"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "knavesneeds:twilight_forest/knightmetal/warglaive",
+    "knavesneeds:twilight_forest/steeleaf/warglaive",
+    "knavesneeds:byg/pendorite/warglaive",
+    "simplyswords:iron_warglaive",
+    "simplyswords:gold_warglaive",
+    "simplyswords:diamond_warglaive",
+    "simplyswords:netherite_warglaive",
+    "simplyswords:runic_warglaive",
+    "simplyswords:watching_warglaive",
+    "blue_skies:aquite/warglaive",
+    "blue_skies:bluebright_wood/warglaive",
+    "blue_skies:charoite/warglaive",
+    "blue_skies:cherry_wood/warglaive",
+    "blue_skies:diopside/warglaive",
+    "blue_skies:horizonite/warglaive",
+    "knavesneeds:twilight_forest/fiery/warglaive",
+    "blue_skies:maple_wood/warglaive",
+    "blue_skies:pyrope/warglaive",
+    "blue_skies:turquoise_stone/warglaive",
+    "knavesneeds:twilight_forest/ironwood/warglaive",
+    "blue_skies:lunar_stone/warglaive",
+    "blue_skies:lunar_wood/warglaive",
+    "blue_skies:starlit_wood/warglaive"
+
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "replace": false,
+  "values": [
+    "mowziesmobs:wrought_axe",
+    "eeeabsmobs:guardian_axe",
+    "blue_skies:aquite/greataxe",
+    "blue_skies:bluebright_wood/greataxe",
+    "blue_skies:charoite/greataxe",
+    "blue_skies:cherry_wood/greataxe",
+    "blue_skies:diopside/greataxe",
+    "blue_skies:dusk_wood/greataxe",
+    "simplyswords:runic_greataxe",
+    "simplyswords:netherite_greataxe",
+    "simplyswords:diamond_greataxe",
+    "simplyswords:gold_greataxe",
+    "simplyswords:iron_greataxe",
+    "knavesneeds:byg/pendorite/greataxe",
+    "knavesneeds:twilight_forest/ironwood/greataxe",
+    "knavesneeds:twilight_forest/steeleaf/greataxe",
+    "knavesneeds:twilight_forest/knightmetal/greataxe",
+    "blue_skies:lunar_wood/greataxe",
+    "blue_skies:maple_wood/greataxe",
+    "blue_skies:pyrope/greataxe",
+    "blue_skies:starlit_wood/greataxe",
+    "blue_skies:turquoise_stone/greataxe",
+    "knavesneeds:twilight_forest/fiery/greataxe",
+    "blue_skies:frostbright_wood/greataxe",
+    "blue_skies:lunar_stone/greataxe",
+    "blue_skies:horizonite/greataxe"
+
+  ]
+}

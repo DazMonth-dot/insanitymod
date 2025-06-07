@@ -7,6 +7,7 @@ import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackCompatibility;
 import net.minecraft.server.packs.repository.PackSource;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -17,9 +18,10 @@ import org.intenses.insanitymod.Insanitymod;
 import java.io.IOException;
 
 
-@Mod.EventBusSubscriber(modid = Insanitymod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Insanitymod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD,value = Dist.CLIENT)
 public class AddPackFinderEventTest {
     public static final String MODID = Insanitymod.MOD_ID;
+
 
     private static void generateRP(AddPackFindersEvent event, String resourceName, String displayName, Pack.Position position, boolean notVisible ){
         try {

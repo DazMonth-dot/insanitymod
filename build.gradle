@@ -149,6 +149,12 @@ dependencies { //TODO: change all version to variables in gradle.properties
 
     compileOnly fg.deobf("curse.maven:Paragliders-289240:4478230")
     runtimeOnly fg.deobf("curse.maven:Paragliders-289240:4478230")
+
+    compileOnly fg.deobf("curse.maven:Tooltips-715660:4132244")
+    runtimeOnly fg.deobf("curse.maven:Tooltips-715660:4132244")
+
+    compileOnly fg.deobf("curse.maven:Obscure-638417:4522272")
+    runtimeOnly fg.deobf("curse.maven:Obscure-638417:4522272")
 }
 
 tasks.named('processResources', ProcessResources).configure {

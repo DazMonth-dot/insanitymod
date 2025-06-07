@@ -1,18 +1,14 @@
 package org.intenses.insanitymod;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
+
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -33,7 +29,6 @@ import org.intenses.insanitymod.network.ItemModePacket;
 
 import org.intenses.insanitymod.panic.*;
 import org.intenses.insanitymod.utils.ClientUtils;
-import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 
 import java.util.AbstractMap;
@@ -53,9 +48,7 @@ public class Insanitymod {
     public static final RegistryObject<Item> SPECIAL_ITEM = ITEMS.register("amulet",
             () -> new SpecialItem(new Item.Properties().stacksTo(1)));
 
-    // Bindings
-    public static final KeyMapping ACTIVATE_KEY = new KeyMapping("key.insanitymod.activate", GLFW.GLFW_KEY_L, "category.insanitymod");
-    public static final KeyMapping SWITCH_MODE_KEY = new KeyMapping("key.insanitymod.switch_mode", GLFW.GLFW_KEY_H, "category.insanitymod");
+
 
     // Channel
     private static final String PROTOCOL_VERSION = "1";
@@ -71,20 +64,24 @@ public class Insanitymod {
 
     public Insanitymod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        PanicAttributes.register(modEventBus);
         ITEMS.register(modEventBus);
         ModSounds.register(modEventBus);
         MinecraftForge.EVENT_BUS.register(new PanicEventHandler());
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new ShieldTweaks());
-        NetworkHandler.register();
         modEventBus.addListener(this::setup);
-
+        PanicAttributes.register(modEventBus);
 
         NewMagicSchoolsRegistry.register(modEventBus);
         AtributesInfo.register(modEventBus);
         NETWORK.registerMessage(0, ItemModePacket.class, ItemModePacket::encode, ItemModePacket::decode, ItemModePacket::handle);
     }
+
+//    private static AttributeSupplier.Builder createPlayerAttributes() {
+//        return LivingEntity.createLivingAttributes()
+//                .add(PanicAttributes.PANIC.get())
+//                .add(PanicAttributes.MAX_PANIC.get());
+//    }
 
     @SubscribeEvent
     public void onRegisterCommands(RegisterCommandsEvent event) {

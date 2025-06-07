@@ -1,6 +1,6 @@
 package org.intenses.insanitymod.panic;
 
-import com.google.common.collect.ImmutableMap;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -14,63 +14,28 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.intenses.insanitymod.Insanitymod;
 
-import java.util.HashMap;
-import java.util.UUID;
-import java.util.function.Function;
-
 @Mod.EventBusSubscriber(modid = Insanitymod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PanicAttributes {
-    public static float clientPanic = 0;
-    public static final HashMap<RegistryObject<Attribute>, UUID> UUIDS = new HashMap<>();
     public static final DeferredRegister<Attribute> ATTRIBUTES =
             DeferredRegister.create(ForgeRegistries.ATTRIBUTES, Insanitymod.MOD_ID);
 
-    // Регистрация атрибутов с UUID
-    public static final RegistryObject<Attribute> PANIC = registerAttribute(
-            "panic",
-            id -> new RangedAttribute(id, 0.0, 0.0, 500.0).setSyncable(true),
-            "d4b3a7c0-5f9d-4b7d-9b7a-1e8f3b7a9b7e"
-    );
+    public static final RegistryObject<Attribute> PANIC = ATTRIBUTES.register("panic",
+            () -> new RangedAttribute("attribute." + Insanitymod.MOD_ID + ".panic", 0.0, 0.0, 500.0).setSyncable(true));
 
-    public static final RegistryObject<Attribute> MAX_PANIC = registerAttribute(
-            "max_panic",
-            id -> new RangedAttribute(id, 100.0, 10.0, 500.0).setSyncable(true),
-            "a2c9e8d7-3b1f-4e75-8d9a-6f4b3c7d8e9f"
-    );
+    public static final RegistryObject<Attribute> MAX_PANIC = ATTRIBUTES.register("max_panic",
+            () -> new RangedAttribute("attribute." + Insanitymod.MOD_ID + ".max_panic", 100.0, 10.0, 500.0).setSyncable(true));
 
-    private static RegistryObject<Attribute> registerAttribute(
-            String name,
-            Function<String, Attribute> attribute,
-            String uuid
-    ) {
-        return registerAttribute(name, attribute, UUID.fromString(uuid));
-    }
-
-    private static RegistryObject<Attribute> registerAttribute(
-            String name,
-            Function<String, Attribute> attribute,
-            UUID uuid
-    ) {
-        RegistryObject<Attribute> registryObject = ATTRIBUTES.register(
-                name,
-                () -> attribute.apply("attribute." + Insanitymod.MOD_ID + "." + name)
-        );
-        UUIDS.put(registryObject, uuid);
-        return registryObject;
-    }
-
-    public static void register(IEventBus eventBus) {
-        ATTRIBUTES.register(eventBus);
+    public static void register(IEventBus bus) {
+        ATTRIBUTES.register(bus);
     }
 
     @SubscribeEvent
-    public static void modifyEntityAttributes(EntityAttributeModificationEvent event) {
-        for (EntityType<? extends LivingEntity> entityType : event.getTypes()) {
-            if (entityType == EntityType.PLAYER) {
-                ATTRIBUTES.getEntries().forEach(entry -> {
-                    event.add(entityType, entry.get());
-                });
-            }
+    public static void onAttributeModify(EntityAttributeModificationEvent event) {
+        if (PANIC.isPresent()) {
+            event.add(EntityType.PLAYER, PANIC.get());
+        }
+        if (MAX_PANIC.isPresent()) {
+            event.add(EntityType.PLAYER, MAX_PANIC.get());
         }
     }
 }
