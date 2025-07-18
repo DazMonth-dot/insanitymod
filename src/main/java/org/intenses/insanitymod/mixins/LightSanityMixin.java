@@ -32,6 +32,7 @@ public class LightSanityMixin {
         return SittingPlayersHelper.isPlayerSitting(player.getUUID()) || player.getVehicle() != null;
     }
 
+
     /**
      * @author DazMonth
      * @reason hz

@@ -2,13 +2,11 @@ package org.intenses.insanitymod.mixins;
 
 import daripher.skilltree.client.data.SkillTreeClientData;
 import daripher.skilltree.client.screen.SkillTreeScreen;
-import daripher.skilltree.client.widget.*;
 import daripher.skilltree.client.widget.skill.SkillButton;
 import daripher.skilltree.config.ClientConfig;
 import daripher.skilltree.network.NetworkDispatcher;
 import daripher.skilltree.network.message.GainSkillPointMessage;
 import daripher.skilltree.skill.PassiveSkill;
-import daripher.skilltree.skill.PassiveSkillTree;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
@@ -26,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.intenses.insanitymod.Insanitymod.LOGGER;
 
 @Mixin(value = SkillTreeScreen.class, remap = false)
 public abstract class SkillTreeScreenMixin extends Screen {
@@ -42,17 +39,6 @@ public abstract class SkillTreeScreenMixin extends Screen {
 
     @Shadow protected abstract void skillButtonPressed(SkillButton button);
 
-    @Shadow private String search;
-
-    @Shadow private boolean showStats;
-
-    @Shadow protected abstract void updateSearch();
-
-    @Shadow private Button buyButton;
-
-    @Shadow private Label pointsInfo;
-
-    @Shadow protected abstract void cancelLearnSkills();
 
     @Shadow @Final public List<ResourceLocation> newlyLearnedSkills;
 
@@ -66,33 +52,6 @@ public abstract class SkillTreeScreenMixin extends Screen {
 
     @Shadow @Nonnull protected abstract LocalPlayer getPlayer();
 
-    @Shadow protected abstract void highlightSkillsThatCanBeLearned();
-
-    @Shadow public abstract void addSkillButtons();
-
-    @Shadow protected int maxScrollY;
-
-    @Shadow protected int maxScrollX;
-
-    @Shadow private ScrollableComponentList statsInfo;
-
-    @Shadow protected abstract List<Component> getMergedSkillBonusesTooltips();
-
-    @Shadow private boolean firstInitDone;
-
-    @Shadow protected abstract void firstInit();
-
-    @Shadow private ProgressBar progressBar;
-
-    @Shadow protected abstract void addTopWidgets();
-
-    @Shadow private boolean showProgressInNumbers;
-
-    @Shadow private int prevMouseX;
-
-    @Shadow private int prevMouseY;
-
-    @Shadow @Final private PassiveSkillTree skillTree;
 
     @Unique
     private void insanitymod$playBack() {
@@ -117,9 +76,6 @@ public abstract class SkillTreeScreenMixin extends Screen {
         assert Minecraft.getInstance().player != null;
         Minecraft.getInstance().player.playSound(ModSounds.SKILL_POINT_LEARN.get(), 1.0F, 1.0F);
     }
-
-    @Unique
-    private Map<SkillButton, Boolean> buttonStates = new HashMap<>();
 
 
 
@@ -154,42 +110,6 @@ public abstract class SkillTreeScreenMixin extends Screen {
             }
         }
     }
-//    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-//        Optional<GuiEventListener> widget = this.getWidgetAt(mouseX, mouseY);
-//        if (widget.isPresent()) {
-//            return widget.get().mouseClicked(mouseX, mouseY, button);
-//        }
-//
-//        SkillButton skill = this.getSkillAt(mouseX, mouseY);
-//        if (skill == null) {
-//            return false;
-//        }
-//
-//
-//        buttonStates.putIfAbsent(skill, false);
-//
-//        if (button == 0 || button == 1) {
-//            LOGGER.info(button + " " + buttonStates.get(skill));
-//            LOGGER.info(button + " " + skill.skillLearned);
-//            LOGGER.info(button + " " + skill.selected);
-//            LOGGER.info(button + " " + skill.active);
-//
-//
-//            this.skillButtonPressed(skill);
-//
-//            if (!buttonStates.get(skill)) {
-//                buttonStates.put(skill, true);
-//                insanitymod$playBack();
-//            } else {
-//                buttonStates.put(skill, false);
-//                insanitymod$playForward();
-//            }
-//
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 
     /**
      * @author DazMonth

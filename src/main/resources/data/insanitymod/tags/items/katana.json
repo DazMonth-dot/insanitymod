@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "simplyswords:gold_katana",
+    "knavesneeds:twilight_forest/steeleaf/katana",
+    "blue_skies:turquoise_stone/katana",
+    "blue_skies:starlit_wood/katana",
+    "blue_skies:lunar_stone/katana",
+    "simplyswords:runic_katana",
+    "simplyswords:netherite_katana",
+    "simplyswords:diamond_katana",
+    "simplyswords:iron_katana",
+    "blue_skies:bluebright_wood/katana",
+    "blue_skies:diopside/katana",
+    "blue_skies:frostbright_wood/katana",
+    "blue_skies:horizonite/katana",
+    "blue_skies:lunar_wood/katana",
+    "blue_skies:maple_wood/katana",
+    "knavesneeds:twilight_forest/ironwood/katana",
+    "knavesneeds:byg/pendorite/katana",
+    "blue_skies:dusk_wood/katana",
+    "knavesneeds:twilight_forest/fiery/katana",
+    "blue_skies:charoite/katana",
+    "blue_skies:pyrope/katana",
+    "knavesneeds:twilight_forest/knightmetal/katana",
+    "blue_skies:cherry_wood/katana",
+    "blue_skies:aquite/katana",
+    "eeeabsmobs:netherworld_katana"
+
+  ]
+}

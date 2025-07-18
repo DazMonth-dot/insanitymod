@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "simplyswords:hearthflame",
+    "simplyswords:soulkeeper",
+    "blue_skies:lunar_wood/greathammer",
+    "simplyswords:netherite_greathammer",
+    "simplyswords:gold_greathammer",
+    "blue_skies:pyrope/greathammer",
+    "blue_skies:starlit_wood/greathammer",
+    "simplyswords:runic_greathammer",
+    "knavesneeds:byg/pendorite/greathammer",
+    "blue_skies:turquoise_stone/greathammer",
+    "knavesneeds:twilight_forest/fiery/greathammer",
+    "blue_skies:charoite/greathammer",
+    "simplyswords:diamond_greathammer",
+    "blue_skies:cherry_wood/greathammer",
+    "blue_skies:diopside/greathammer",
+    "knavesneeds:twilight_forest/knightmetal/greathammer",
+    "knavesneeds:twilight_forest/ironwood/greathammer",
+    "blue_skies:dusk_wood/greathammer",
+    "blue_skies:frostbright_wood/greathammer",
+    "blue_skies:horizonite/greathammer",
+    "blue_skies:maple_wood/greathammer",
+    "simplyswords:iron_greathammer",
+    "blue_skies:lunar_stone/greathammer",
+    "knavesneeds:twilight_forest/steeleaf/greathammer"
+
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "replace": false,
+  "values": [
+    "cataclysm:meat_shredder",
+    "cataclysm:coral_bardiche",
+    "blue_skies:diopside/glaive",
+    "blue_skies:bluebright_wood/glaive",
+    "blue_skies:charoite/glaive",
+    "blue_skies:aquite/glaive",
+    "blue_skies:cherry_wood/glaive",
+    "blue_skies:dusk_wood/glaive",
+    "blue_skies:frostbright_wood/glaive",
+    "simplyswords:runic_glaive",
+    "simplyswords:netherite_glaive",
+    "knavesneeds:twilight_forest/steeleaf/glaive",
+    "simplyswords:diamond_glaive",
+    "knavesneeds:twilight_forest/knightmetal/glaive",
+    "simplyswords:gold_glaive",
+    "knavesneeds:twilight_forest/ironwood/glaive",
+    "simplyswords:iron_glaive",
+    "knavesneeds:byg/pendorite/glaive",
+    "knavesneeds:twilight_forest/fiery/glaive",
+    "blue_skies:lunar_wood/glaive",
+    "blue_skies:maple_wood/glaive",
+    "blue_skies:pyrope/glaive",
+    "blue_skies:starlit_wood/glaive",
+    "blue_skies:turquoise_stone/glaive",
+    "blue_skies:lunar_stone/glaive",
+    "blue_skies:horizonite/glaive"
+
+  ]
+}

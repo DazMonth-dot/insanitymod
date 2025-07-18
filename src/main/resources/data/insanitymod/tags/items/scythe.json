@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    "undead_unleashed:reaping_scythe",
+    "born_in_chaos_v1:nightmare_scythe",
+    "dreadsteel:dreadsteel_scythe",
+    "blue_skies:aquite/scythe",
+    "blue_skies:bluebright_wood/scythe",
+    "blue_skies:charoite/scythe",
+    "blue_skies:cherry_wood/scythe",
+    "blue_skies:diopside/scythe",
+    "blue_skies:dusk_wood/scythe",
+    "simplyswords:runic_scythe",
+    "simplyswords:netherite_scythe",
+    "simplyswords:diamond_scythe",
+    "simplyswords:gold_scythe",
+    "simplyswords:iron_scythe",
+    "knavesneeds:byg/pendorite/scythe",
+    "knavesneeds:twilight_forest/steeleaf/scythe",
+    "knavesneeds:twilight_forest/knightmetal/scythe",
+    "knavesneeds:twilight_forest/ironwood/scythe",
+    "blue_skies:frostbright_wood/scythe",
+    "blue_skies:horizonite/scythe",
+    "blue_skies:lunar_stone/scythe",
+    "blue_skies:lunar_wood/scythe",
+    "blue_skies:maple_wood/scythe",
+    "blue_skies:pyrope/scythe",
+    "blue_skies:starlit_wood/scythe",
+    "blue_skies:turquoise_stone/scythe",
+    "knavesneeds:twilight_forest/fiery/scythe"
+
+  ]
+}

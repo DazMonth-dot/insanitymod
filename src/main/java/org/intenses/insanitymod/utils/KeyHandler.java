@@ -9,6 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.intenses.insanitymod.Insanitymod;
 import org.intenses.insanitymod.Items.SpecialItem;
+import org.intenses.insanitymod.network.ClientKeysModEvents;
 import org.intenses.insanitymod.network.ItemModePacket;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
@@ -30,14 +31,14 @@ public class KeyHandler {
         int mode = SpecialItem.getMode(stack);
 
         // Логика переключения состояния
-        if (Insanitymod.ACTIVATE_KEY.consumeClick()) {
+        if (ClientKeysModEvents.ACTIVATE_KEY.consumeClick()) {
             boolean newActive = !isActive;
             SpecialItem.setActive(stack, newActive);
             if (!newActive && stack.getItem() instanceof SpecialItem specialItem) {
                 specialItem.removeEffects(player, mode); // Удаляем эффект текущего режима при деактивации через экземпляр
             }
             sendPacket(player, newActive, mode, mode); // Передаём предыдущий и новый режим (одинаковые при активации/деактивации)
-        } else if (Insanitymod.SWITCH_MODE_KEY.consumeClick()) {
+        } else if (ClientKeysModEvents.SWITCH_MODE_KEY.consumeClick()) {
             int previousMode = mode;
             int newMode = (mode + 1) % 3; // Циклическое переключение 0 → 1 → 2 → 0
             if (!isActive) {

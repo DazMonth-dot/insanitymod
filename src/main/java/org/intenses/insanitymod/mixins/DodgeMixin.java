@@ -9,11 +9,12 @@ import com.elenai.elenaidodge2.util.DodgeHandler;
 import com.elenai.feathers.api.FeathersHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import org.intenses.insanitymod.Insanitymod;
 import org.spongepowered.asm.mixin.Mixin;
@@ -43,24 +44,15 @@ public class DodgeMixin {
     }
 
     @Unique
-    private static ServerPlayer getServerPlayer(LocalPlayer localPlayer) {
-        if (localPlayer == null) {
-            Insanitymod.LOGGER.warn("LocalPlayer is null in getServerPlayer");
-            return null;
-        }
+    private static boolean isOnIce(LocalPlayer player){
 
-        MinecraftServer server = localPlayer.clientLevel.getServer();
-        if (server == null) {
-            Insanitymod.LOGGER.warn("Server is null for LocalPlayer {}", localPlayer.getName().getString());
-            return null;
-        }
-
-        ServerPlayer serverPlayer = server.getPlayerList().getPlayer(localPlayer.getUUID());
-        if (serverPlayer == null) {
-            Insanitymod.LOGGER.warn("ServerPlayer not found for UUID {}", localPlayer.getUUID());
-        }
-        return serverPlayer;
+        BlockPos pos = player.blockPosition().below();
+        return player.level.getBlockState(pos).getBlock() == Blocks.ICE ||
+                player.level.getBlockState(pos).getBlock() == Blocks.PACKED_ICE ||
+                player.level.getBlockState(pos).getBlock() == Blocks.BLUE_ICE ||
+                player.level.getBlockState(pos).getBlock() == Blocks.FROSTED_ICE;
     }
+
 
     /**
      * @author Dazmonth
@@ -73,7 +65,8 @@ public class DodgeMixin {
                 !instance.player.isRidingJumpable() && !instance.player.isCrouching() &&
                 ClientEvents.currentCooldown == 0 && instance.screen == null &&
                 !instance.player.isSwimming() && instance.player.getFoodData().getFoodLevel() > 6 &&
-                !instance.player.isBlocking() && FeathersHelper.spendFeathers(ED2ClientStorage.getCost())) {
+                !instance.player.isBlocking() && FeathersHelper.spendFeathers(ED2ClientStorage.getCost()) && !isOnIce(instance.player)) {
+
 
             String animationDirection = DodgeAnimator.DodgeDirection.BACKWARDS.name();
             double power = ED2ClientStorage.getPower();
@@ -87,7 +80,7 @@ public class DodgeMixin {
             Vec3 forwardsRight = forwards.add(right).scale(0.5F);
             Vec3 backwardsLeft = backwards.add(left).scale(0.5F);
             Vec3 backwardsRight = backwards.add(right).scale(0.5F);
-
+            spawnParticles(instance.player.level, instance.player.position(), 20);
             switch (direction) {
                 case FORWARDS:
                     instance.player.push(forwards.x, forwards.y, forwards.z);
@@ -123,17 +116,11 @@ public class DodgeMixin {
                     break;
             }
 
-            LocalPlayer localPlayer = instance.player;
-            ServerPlayer serverPlayer = getServerPlayer(localPlayer);
-            Vec3 pos = localPlayer.position();
-            if (serverPlayer != null) {
-                spawnParticles(serverPlayer.getLevel(), pos, 20); // Используем ServerLevel, если доступен
-            } else {
-                spawnParticles(localPlayer.level, pos, 10); // Иначе используем клиентский уровень
-            }
+
 
             ClientEvents.currentCooldown = ED2ClientStorage.getCooldown();
             ED2Messages.sendToServer(new DodgeEffectsCTSPacket(animationDirection));
+            // ParcoolStuff.applyFastRunLimitation(serverPlayer,"fastrun",true);
         }
     }
 }
