@@ -7,10 +7,9 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import org.intenses.insanitymod.Insanitymod;
+
 
 public class PanicCommands {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {

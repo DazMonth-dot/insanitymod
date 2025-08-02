@@ -15,8 +15,8 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.ModList;
-import org.intenses.insanitymod.Insanitymod;
 import org.intenses.insanitymod.network.ClientKeysModEvents;
+import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.SlotResult;
@@ -85,7 +85,7 @@ public class SpecialItem extends Item implements ICurio {
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean isSelected) {
+    public void inventoryTick(ItemStack stack, Level level, @NotNull Entity entity, int slot, boolean isSelected) {
         if (level.isClientSide || !(entity instanceof Player player)) return;
 
         boolean isActive = isActive(stack);

@@ -1,4 +1,4 @@
-package org.intenses.insanitymod.utils;
+package org.intenses.insanitymod.QoL;
 
 import org.intenses.insanitymod.Insanitymod;
 import org.intenses.insanitymod.mixins.PersonalityAccessor;

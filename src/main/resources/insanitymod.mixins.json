@@ -1,9 +1,18 @@
 {
   "package": "org.intenses.insanitymod.mixins",
   "refmap": "insanitymod.mixins.refmap.json",
-  "mixins": ["DarknessMixin","LightSanityMixin","PersonalityAccessor"
+  "mixins": [
+    "DarknessMixin",
+    "LightSanityMixin",
+    "PersonalityAccessor",
+    "PersonalityClientAccessor"
   ],
-  "client": ["SkillTreeScreenMixin","DodgeMixin","PersonalityAccessor"
+  "client": [
+    "DodgeMixin",
+    "forgetScreens",
+    "OriginsScreenDisabler",
+    "PersonalityAccessor",
+    "SkillTreeScreenMixin"
   ],
   "minVersion": "0.8.5"
 }

@@ -1,28 +1,11 @@
-package org.intenses.insanitymod.utils;
+package org.intenses.insanitymod.QoL;
 
-import com.alrex.parcool.api.unstable.Limitation;
-import com.alrex.parcool.api.unstable.action.ParCoolActionEvent;
-import com.alrex.parcool.common.action.Action;
-import com.alrex.parcool.common.action.impl.Crawl;
-import com.alrex.parcool.common.action.impl.Dodge;
-import com.alrex.parcool.common.action.impl.FastRun;
-import com.alrex.parcool.common.action.impl.Slide;
-import com.elenai.elenaidodge2.client.ED2ClientStorage;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.intenses.insanitymod.Insanitymod;
-import tictim.paraglider.contents.item.ParagliderItem;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotResult;
 
 
 @Mod.EventBusSubscriber(modid = Insanitymod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)

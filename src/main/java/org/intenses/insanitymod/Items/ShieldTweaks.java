@@ -16,17 +16,13 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.intenses.insanitymod.Insanitymod;
 import org.intenses.insanitymod.config.ShieldConfig;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class ShieldTweaks {
@@ -175,7 +171,7 @@ public class ShieldTweaks {
         }
 
         ItemStack stack = event.getItemStack();
-        String itemId = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
+        String itemId = Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(stack.getItem())).toString();
         ShieldConfig.Shield shield = SHIELD_LOOKUP.get(itemId);
 
         if (shield != null) {
@@ -199,7 +195,7 @@ public class ShieldTweaks {
         if (stack.isEmpty()) {
             return null;
         }
-        String itemID = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
+        String itemID = Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(stack.getItem())).toString();
         return SHIELD_LOOKUP.get(itemID);
     }
 }

@@ -6,14 +6,12 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.intenses.insanitymod.Insanitymod;
-import org.intenses.insanitymod.utils.ModAttributes;
+import org.intenses.insanitymod.QoL.GlobalTumblers;
 
 @Mod.EventBusSubscriber(modid = Insanitymod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PanicEventHandler {
@@ -28,6 +26,7 @@ public class PanicEventHandler {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
         if (event.player.level.isClientSide()) return;
+        if (!GlobalTumblers.PanicWork) return;
 
         Player player = event.player;
         AttributeInstance panicAttr = player.getAttribute(PanicAttributes.PANIC.get());
@@ -78,6 +77,7 @@ public class PanicEventHandler {
 
     @SubscribeEvent
     public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+        if (!GlobalTumblers.PanicWork) return;
         if (event.getEntity() instanceof Player) {
             Player player = event.getEntity();
             PanicSystem.setCurrentPanic(player, 0.0);

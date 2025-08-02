@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.intenses.insanitymod.utils.SittingPlayersHelper;
+import org.intenses.insanitymod.QoL.SittingPlayersHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Unique;

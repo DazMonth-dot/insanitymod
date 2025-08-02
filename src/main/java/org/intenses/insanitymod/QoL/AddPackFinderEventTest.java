@@ -1,4 +1,4 @@
-package org.intenses.insanitymod.utils;
+package org.intenses.insanitymod.QoL;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;

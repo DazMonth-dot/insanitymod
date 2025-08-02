@@ -1,4 +1,4 @@
-package org.intenses.insanitymod.utils;
+package org.intenses.insanitymod.QoL;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;

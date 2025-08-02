@@ -6,12 +6,13 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.intenses.insanitymod.Insanitymod;
+import org.intenses.insanitymod.QoL.GlobalTumblers;
 
 @Mod.EventBusSubscriber(modid = Insanitymod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerHandler {
     @SubscribeEvent
     public static void onPlayerJoin(EntityJoinLevelEvent event) {
-
+        if (!GlobalTumblers.PanicWork) return;
         if (event.getEntity() instanceof Player player && !event.getLevel().isClientSide()) {
             initAttributes(player);
         }

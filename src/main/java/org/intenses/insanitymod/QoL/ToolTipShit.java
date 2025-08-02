@@ -1,4 +1,4 @@
-package org.intenses.insanitymod.utils;
+package org.intenses.insanitymod.QoL;
 
 
 import net.minecraft.network.chat.Component;
@@ -11,6 +11,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.intenses.insanitymod.Insanitymod;
 
+import java.awt.*;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Insanitymod.MOD_ID, value = Dist.CLIENT)
@@ -21,6 +22,11 @@ public class ToolTipShit {
         if (event.getEntity() == null) return;
         List<Component> tooltip = event.getToolTip();
 
+        tooltip.add(Component.translatable(ClientUtils.getWeaponTypeKey(event.getItemStack()))
+                .withStyle(style-> style.withColor(Color.RED.getRGB()))
+                .withStyle(style -> style.withBold(true))
+                .withStyle(style -> style.withItalic(true))
+        );
         for (int i = 0; i < tooltip.size(); i++) {
             Component component = tooltip.get(i);
             ComponentContents contents = component.getContents();
@@ -36,4 +42,6 @@ public class ToolTipShit {
         }
         tooltip.add(Component.empty());
     }
+
+
 }
