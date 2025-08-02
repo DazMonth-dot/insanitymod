@@ -13,7 +13,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import org.intenses.insanitymod.Insanitymod;
@@ -44,7 +43,7 @@ public class DodgeMixin {
     }
 
     @Unique
-    private static boolean isOnIce(LocalPlayer player){
+    private static boolean insanitymod$isOnIce(LocalPlayer player){
 
         BlockPos pos = player.blockPosition().below();
         return player.level.getBlockState(pos).getBlock() == Blocks.ICE ||
@@ -65,7 +64,7 @@ public class DodgeMixin {
                 !instance.player.isRidingJumpable() && !instance.player.isCrouching() &&
                 ClientEvents.currentCooldown == 0 && instance.screen == null &&
                 !instance.player.isSwimming() && instance.player.getFoodData().getFoodLevel() > 6 &&
-                !instance.player.isBlocking() && FeathersHelper.spendFeathers(ED2ClientStorage.getCost()) && !isOnIce(instance.player)) {
+                !instance.player.isBlocking() && FeathersHelper.spendFeathers(ED2ClientStorage.getCost()) && !insanitymod$isOnIce(instance.player)) {
 
 
             String animationDirection = DodgeAnimator.DodgeDirection.BACKWARDS.name();

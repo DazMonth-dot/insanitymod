@@ -15,6 +15,7 @@ import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.intenses.insanitymod.Insanitymod;
+import org.intenses.insanitymod.QoL.GlobalTumblers;
 
 @Mod.EventBusSubscriber(modid = Insanitymod.MOD_ID, value = Dist.CLIENT)
 public class StressBarRenderer {
@@ -22,7 +23,7 @@ public class StressBarRenderer {
 
     @SubscribeEvent
     public static void onRenderOverlay(RenderGuiOverlayEvent.Pre event) {
-        if (!PanicStuff.ENABLE_RENDERING) return;
+        if (!GlobalTumblers.PanicRender || !GlobalTumblers.PanicWork) return;
         Minecraft mc = Minecraft.getInstance();
         Screen currentScreen = mc.screen;
         if (!(currentScreen instanceof InventoryScreen)) return;

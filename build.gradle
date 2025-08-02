@@ -155,6 +155,12 @@ dependencies { //TODO: change all version to variables in gradle.properties
 
     compileOnly fg.deobf("curse.maven:Obscure-638417:4522272")
     runtimeOnly fg.deobf("curse.maven:Obscure-638417:4522272")
+
+    compileOnly fg.deobf("curse.maven:Gliders-828331:5007492")
+    runtimeOnly fg.deobf("curse.maven:Gliders-828331:5007492")
+
+    compileOnly fg.deobf("curse.maven:Origins-474438:5314165")
+    runtimeOnly fg.deobf("curse.maven:Origins-474438:5314165")
 }
 
 tasks.named('processResources', ProcessResources).configure {

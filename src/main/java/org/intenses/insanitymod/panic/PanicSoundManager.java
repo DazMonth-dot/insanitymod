@@ -1,7 +1,6 @@
 package org.intenses.insanitymod.panic;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -18,6 +17,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.intenses.insanitymod.Insanitymod;
+import org.intenses.insanitymod.QoL.GlobalTumblers;
 
 @Mod.EventBusSubscriber(modid = Insanitymod.MOD_ID, value = Dist.CLIENT)
 public class PanicSoundManager {
@@ -41,7 +41,7 @@ public class PanicSoundManager {
 
     @SubscribeEvent
     public static void onPlaySound(PlaySoundEvent event) {
-
+        if (!GlobalTumblers.PanicWork) return;
 
         if (event.getSound().getSource() == SoundSource.MUSIC) {
             Player player = Minecraft.getInstance().player;
@@ -58,6 +58,7 @@ public class PanicSoundManager {
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (!GlobalTumblers.PanicWork) return;
         if (event.phase != TickEvent.Phase.END) return;
         if (!(event.player instanceof ServerPlayer player)) return;
 

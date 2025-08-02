@@ -1,4 +1,4 @@
-package org.intenses.insanitymod.utils;
+package org.intenses.insanitymod.QoL;
 
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

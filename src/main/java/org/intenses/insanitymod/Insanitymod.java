@@ -22,13 +22,16 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.intenses.insanitymod.Items.ShieldTweaks;
 import org.intenses.insanitymod.Items.SpecialItem;
+import org.intenses.insanitymod.classChoose.SetOriginPacket;
+import org.intenses.insanitymod.classChoose.firstJoinPacket;
 import org.intenses.insanitymod.magic.AtributesInfo;
 import org.intenses.insanitymod.magic.NewMagicSchoolsRegistry;
 import org.intenses.insanitymod.music.ModSounds;
 import org.intenses.insanitymod.network.ItemModePacket;
 
+
 import org.intenses.insanitymod.panic.*;
-import org.intenses.insanitymod.utils.ClientUtils;
+import org.intenses.insanitymod.QoL.ClientUtils;
 import org.slf4j.Logger;
 
 import java.util.AbstractMap;
@@ -71,10 +74,20 @@ public class Insanitymod {
         MinecraftForge.EVENT_BUS.register(new ShieldTweaks());
         modEventBus.addListener(this::setup);
         PanicAttributes.register(modEventBus);
-
         NewMagicSchoolsRegistry.register(modEventBus);
         AtributesInfo.register(modEventBus);
         NETWORK.registerMessage(0, ItemModePacket.class, ItemModePacket::encode, ItemModePacket::decode, ItemModePacket::handle);
+        NETWORK.registerMessage(
+                1,
+                firstJoinPacket.class,
+                firstJoinPacket::encode,
+                firstJoinPacket::decode,
+                firstJoinPacket::handle
+        );
+        NETWORK.registerMessage(2, SetOriginPacket.class,
+                SetOriginPacket::encode,
+                SetOriginPacket::decode,
+                SetOriginPacket::handle);
     }
 
 //    private static AttributeSupplier.Builder createPlayerAttributes() {

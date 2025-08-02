@@ -1,4 +1,4 @@
-package org.intenses.insanitymod.utils;
+package org.intenses.insanitymod.QoL;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
